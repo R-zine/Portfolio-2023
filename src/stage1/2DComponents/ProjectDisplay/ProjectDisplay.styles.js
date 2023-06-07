@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { keyframes, css } from "@emotion/react";
-import SeeSource from "../../../assets/SeeSource.png";
 
 const glitchBorder = keyframes`
     0%   {transform: translate(-2px, 2px);}

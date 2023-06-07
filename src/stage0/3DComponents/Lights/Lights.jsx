@@ -3,7 +3,7 @@ import { Environment } from "@react-three/drei";
 export const Lights = () => {
   return (
     <>
-      <Environment preset="night" />
+      <Environment files="/sky.hdr" />
       <ambientLight intensity={0.1} color={"red"} />
       <ambientLight intensity={1} color={"purple"} />
       <ambientLight intensity={10} color={"grey"} />
