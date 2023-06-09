@@ -1,11 +1,23 @@
 import * as THREE from "three";
-import { useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
+import { useEffect, useRef, useState } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
+import { Html, Box } from "@react-three/drei";
 import "./html.css";
+import pointingImg from "./pointing.jpg";
 import gsap from "gsap";
+import { useDispatch, useSelector } from "react-redux";
+import { setContactCount } from "../../../app/contactsCounterSlice";
+import { RigidBody } from "@react-three/rapier";
 
-export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
+export const Side = ({
+  rotateX,
+  rotateY,
+  rotateZ,
+  position,
+  args,
+  html,
+  handleClick,
+}) => {
   const [isHovered, setIsHovered] = useState({
     linkedin: false,
     git: false,
@@ -14,11 +26,45 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
     message: false,
   });
 
-  const handleHoverChange = (key, newValue) =>
-    setIsHovered((prev) => ({ ...prev, [key]: newValue }));
+  const [isHTML, setIsHTML] = useState(false);
 
   const ref = useRef(null);
-  const secondRef = useRef(null);
+  const rigidRef = useRef(null);
+  const reflectionRef = useRef(1);
+
+  const contactPhase = useSelector((state) => state.contactCounter.value);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (html) setTimeout(() => setIsHTML(true), 1000);
+  }, [html]);
+
+  useEffect(() => {
+    if (rigidRef.current && contactPhase === 4) {
+      rigidRef.current.applyImpulse(
+        {
+          x: 0.5 * (Math.random() - 0.49),
+          y: Math.random() - 0.49,
+          z: 0.5 * (Math.random() * 0.49),
+        },
+        true
+      );
+      rigidRef.current.applyTorqueImpulse(
+        {
+          x: 0.5 * (Math.random() - 0.49),
+          y: Math.random() - 0.49,
+          z: 0.5 * (Math.random() * 0.49),
+        },
+        true
+      );
+    }
+  }, [contactPhase, rigidRef]);
+
+  const pointingTexture = useLoader(THREE.TextureLoader, pointingImg);
+
+  const handleHoverChange = (key, newValue) =>
+    setIsHovered((prev) => ({ ...prev, [key]: newValue }));
 
   useFrame((state) => {
     if (rotateX) ref.current.rotation.x = rotateX;
@@ -28,35 +74,69 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
 
   if (!!position && !!args)
     return (
-      <group>
-        <mesh ref={ref} position={position} castShadow>
-          <planeGeometry args={args} />
-          <meshStandardMaterial
-            metalness={1}
-            roughness={0.005}
-            color={"grey"}
-            emissive={"purple"}
-            emissiveIntensity={0.1}
-            side={THREE.DoubleSide}
-          />
-        </mesh>
-        {html && (
+      <group
+        onClick={() => {
+          if (handleClick) handleClick();
+        }}
+      >
+        <RigidBody
+          type="dynamic"
+          restitution={1.3}
+          friction={0.2}
+          ref={rigidRef}
+        >
+          <Box
+            args={args}
+            ref={ref}
+            onPointerEnter={() =>
+              gsap.to(reflectionRef, {
+                current: 2,
+                duration: 1,
+                overwrite: "auto",
+              })
+            }
+            onPointerLeave={() =>
+              gsap.to(reflectionRef, { current: 1, overwrite: "auto" })
+            }
+            position={position}
+            castShadow
+          >
+            <meshStandardMaterial
+              metalness={reflectionRef.current}
+              roughness={0.005}
+              color={"grey"}
+              emissive={"purple"}
+              emissiveIntensity={0.1}
+              side={THREE.DoubleSide}
+              // map={pointingTexture}
+              bumpMap={pointingTexture}
+              bumpScale={1}
+              normalMap={pointingTexture}
+              // displacementMap={pointingTexture}
+              // displacementScale={10}
+            />
+          </Box>
+        </RigidBody>
+        {isHTML && contactPhase !== 4 && (
           <>
             <mesh position={position} scale={0.99}>
-              <planeGeometry ref={secondRef} args={args} />
-              <meshStandardMaterial
-                metalness={1}
-                roughness={0.005}
-                color={"grey"}
-                emissive={"white"}
-                emissiveIntensity={0.8}
-                side={THREE.BackSide}
-              />
+              <RigidBody>
+                <Box args={args}>
+                  <meshStandardMaterial
+                    metalness={1}
+                    roughness={0.005}
+                    color={"grey"}
+                    emissive={"white"}
+                    emissiveIntensity={0.8}
+                    side={THREE.BackSide}
+                  />
+                </Box>
+              </RigidBody>
 
               <Html
                 position={[0, 1.7, 0]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={10}
                 wrapperClass="cubeHTML"
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
@@ -73,7 +153,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
               >
                 <div
                   style={{
-                    fontSize: 160,
+                    fontSize: 16,
                     color: "black",
                     fontWeight: 900,
                   }}
@@ -84,7 +164,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
               <Html
                 position={[0, 1, 0]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={10}
                 wrapperClass="cubeHTML"
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
@@ -101,7 +181,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
               >
                 <div
                   style={{
-                    fontSize: 220,
+                    fontSize: 22,
                     color: "black",
                     fontWeight: 900,
                   }}
@@ -110,21 +190,29 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 </div>
               </Html>
             </mesh>
-            <group position={[-5, -2.5, 0]}>
+            <group
+              onPointerEnter={() =>
+                contactPhase !== 4 && dispatch(setContactCount(3))
+              }
+              position={[-5, -2.5, 0]}
+            >
               <mesh scale={0.99}>
-                <planeGeometry args={args} />
-                <meshStandardMaterial
-                  metalness={1}
-                  roughness={0.005}
-                  color={"grey"}
-                  emissive={"white"}
-                  emissiveIntensity={0.8}
-                  side={THREE.BackSide}
-                />
+                <RigidBody>
+                  <Box args={args}>
+                    <meshStandardMaterial
+                      metalness={1}
+                      roughness={0.005}
+                      color={"grey"}
+                      emissive={"white"}
+                      emissiveIntensity={0.8}
+                      side={THREE.BackSide}
+                    />
+                  </Box>
+                </RigidBody>
                 <Html
                   position={[0, 1.7, -1]}
                   rotation={[0, Math.PI, 0]}
-                  scale={1}
+                  scale={10}
                   // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -141,7 +229,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                   <span
                     style={{
                       color: "black",
-                      fontSize: 160,
+                      fontSize: 16,
                     }}
                   >
                     Socials:
@@ -150,7 +238,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 <Html
                   position={[0, 0.9, -1]}
                   rotation={[0, Math.PI, 0]}
-                  scale={1}
+                  scale={10}
                   // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -168,24 +256,24 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                     onPointerEnter={() => handleHoverChange("linkedin", true)}
                     onPointerLeave={() => handleHoverChange("linkedin", false)}
                     style={{
-                      fontSize: 160,
+                      fontSize: 16,
                       display: "flex",
-                      gap: 100,
-                      border: "10px solid black",
-                      borderRadius: 15,
-                      padding: 15,
+                      gap: 10,
+                      border: "1px solid black",
+                      borderRadius: 1.5,
+                      padding: 1.5,
                       backgroundColor: isHovered.linkedin
                         ? "black"
                         : "#00000000",
                       transition: "0.5s",
                       cursor: isHovered.linkedin ? "pointer" : "auto",
-                      width: isHovered.linkedin ? 950 : 750,
+                      width: isHovered.linkedin ? 95 : 75,
                     }}
                   >
                     <div
                       style={{
-                        height: 180,
-                        marginTop: -15,
+                        height: 18,
+                        marginTop: -1.5,
                         filter: isHovered.linkedin ? "invert(100%)" : "none",
                       }}
                     >
@@ -204,10 +292,10 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                       }
                       style={{
                         color: isHovered.linkedin ? "white" : "black",
-                        fontSize: 100,
-                        textIndent: isHovered.linkedin ? 200 : 0,
+                        fontSize: 10,
+                        textIndent: isHovered.linkedin ? 20 : 0,
                         textShadow: isHovered.linkedin
-                          ? "-200px 0 20px white"
+                          ? "-20px 0 2px white"
                           : "0 0 0 0 white",
                         transition: "0.5s",
                       }}
@@ -219,7 +307,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 <Html
                   position={[0, 0, -1]}
                   rotation={[0, Math.PI, 0]}
-                  scale={1}
+                  scale={10}
                   // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -237,22 +325,22 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                     onPointerEnter={() => handleHoverChange("git", true)}
                     onPointerLeave={() => handleHoverChange("git", false)}
                     style={{
-                      fontSize: 160,
+                      fontSize: 16,
                       display: "flex",
-                      gap: 100,
-                      border: "10px solid black",
-                      borderRadius: 15,
-                      padding: 15,
+                      gap: 10,
+                      border: "1px solid black",
+                      borderRadius: 1.5,
+                      padding: 1.5,
                       backgroundColor: isHovered.git ? "black" : "#00000000",
                       transition: "0.5s",
                       cursor: isHovered.git ? "pointer" : "auto",
-                      width: isHovered.git ? 950 : 750,
+                      width: isHovered.git ? 95 : 75,
                     }}
                   >
                     <div
                       style={{
-                        height: 180,
-                        marginTop: -15,
+                        height: 18,
+                        marginTop: -1.5,
                         filter: isHovered.git ? "invert(100%)" : "none",
                       }}
                     >
@@ -269,10 +357,10 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                       onPointerLeave={() => handleHoverChange("git", false)}
                       style={{
                         color: isHovered.git ? "white" : "black",
-                        fontSize: 100,
-                        textIndent: isHovered.git ? 200 : 0,
+                        fontSize: 10,
+                        textIndent: isHovered.git ? 20 : 0,
                         textShadow: isHovered.git
-                          ? "-200px 0 20px white"
+                          ? "-20px 0 2px white"
                           : "0 0 0 0 white",
                         transition: "0.5s",
                       }}
@@ -284,7 +372,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 <Html
                   position={[0, -0.9, -1]}
                   rotation={[0, Math.PI, 0]}
-                  scale={1}
+                  scale={10}
                   // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -302,22 +390,22 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                     onPointerEnter={() => handleHoverChange("reddit", true)}
                     onPointerLeave={() => handleHoverChange("reddit", false)}
                     style={{
-                      fontSize: 160,
+                      fontSize: 16,
                       display: "flex",
-                      gap: 100,
-                      border: "10px solid black",
-                      borderRadius: 15,
-                      padding: 15,
+                      gap: 10,
+                      border: "1px solid black",
+                      borderRadius: 1.5,
+                      padding: 1.5,
                       backgroundColor: isHovered.reddit ? "black" : "#00000000",
                       transition: "0.5s",
                       cursor: isHovered.reddit ? "pointer" : "auto",
-                      width: isHovered.reddit ? 950 : 750,
+                      width: isHovered.reddit ? 95 : 75,
                     }}
                   >
                     <div
                       style={{
-                        height: 180,
-                        marginTop: -15,
+                        height: 18,
+                        marginTop: -1.5,
                         filter: isHovered.reddit ? "invert(100%)" : "none",
                       }}
                     >
@@ -334,10 +422,10 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                       onPointerLeave={() => handleHoverChange("reddit", false)}
                       style={{
                         color: isHovered.reddit ? "white" : "black",
-                        fontSize: 100,
-                        textIndent: isHovered.reddit ? 200 : 0,
+                        fontSize: 10,
+                        textIndent: isHovered.reddit ? 20 : 0,
                         textShadow: isHovered.reddit
-                          ? "-200px 0 20px white"
+                          ? "-20px 0 2px white"
                           : "0 0 0 0 white",
                         transition: "0.5s",
                       }}
@@ -348,20 +436,29 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 </Html>
               </mesh>
             </group>
-            <mesh position={[5, -2.5, 0]} scale={0.99}>
-              <planeGeometry args={args} />
-              <meshStandardMaterial
-                metalness={1}
-                roughness={0.005}
-                color={"grey"}
-                emissive={"white"}
-                emissiveIntensity={0.8}
-                side={THREE.BackSide}
-              />
+            <mesh
+              position={[5, -2.5, 0]}
+              scale={0.99}
+              onPointerEnter={() =>
+                contactPhase !== 4 && dispatch(setContactCount(5))
+              }
+            >
+              <RigidBody>
+                <Box args={args}>
+                  <meshStandardMaterial
+                    metalness={1}
+                    roughness={0.005}
+                    color={"grey"}
+                    emissive={"white"}
+                    emissiveIntensity={0.8}
+                    side={THREE.BackSide}
+                  />
+                </Box>
+              </RigidBody>
               <Html
                 position={[0, 1.7, -1]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={10}
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -378,7 +475,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                 <span
                   style={{
                     color: "black",
-                    fontSize: 160,
+                    fontSize: 16,
                   }}
                 >
                   Connect:
@@ -387,7 +484,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
               <Html
                 position={[0, 0.9, -1]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={10}
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -405,14 +502,14 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                   onPointerEnter={() => handleHoverChange("email", true)}
                   onPointerLeave={() => handleHoverChange("email", false)}
                   style={{
-                    fontSize: 160,
+                    fontSize: 16,
                     display: "flex",
-                    gap: 100,
-                    border: "10px solid black",
-                    borderRadius: 15,
+                    gap: 10,
+                    border: "1px solid black",
+                    borderRadius: 1.5,
                     transition: "0.5s",
                     cursor: isHovered.email ? "pointer" : "auto",
-                    width: isHovered.email ? 1350 : 1250,
+                    width: isHovered.email ? 115 : 105,
                   }}
                 >
                   <input type="email" placeholder="Email" className="input" />
@@ -421,7 +518,7 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
               <Html
                 position={[0, -0.3, -1]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={10}
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
@@ -440,41 +537,51 @@ export const Side = ({ rotateX, rotateY, rotateZ, position, args, html }) => {
                   onPointerLeave={() => handleHoverChange("message", false)}
                   className="textarea"
                   style={{
-                    border: "10px solid black",
-                    borderRadius: 15,
+                    border: "1px solid black",
+                    borderRadius: 1.5,
                     transition: "0.5s",
                     cursor: isHovered.message ? "pointer" : "auto",
-                    width: 1250,
+                    width: 105,
+                    justifyItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   <textarea placeholder="Message" className="textarea" />
                 </div>
               </Html>
               <Html
-                position={[0, -1.5, -1]}
+                position={[0, -1.8, -1]}
                 rotation={[0, Math.PI, 0]}
-                scale={1}
+                scale={8}
                 // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
                 // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
+                sprite={true} // Renders as sprite, but only in transform mode (default=false)
                 // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
                 // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
                 // {...groupProps} // All THREE.Group props are valid
                 // {...divProps} // All HTMLDivElement props are valid
               >
-                <span
+                <div
                   style={{
                     color: "black",
-                    fontSize: 160,
+                    fontSize: 20,
                   }}
                 >
-                  Nobody can see this.
-                </span>
+                  Nobody
+                </div>
+                <div
+                  style={{
+                    color: "black",
+                    fontSize: 20,
+                  }}
+                >
+                  can see this.
+                </div>
               </Html>
             </mesh>
           </>

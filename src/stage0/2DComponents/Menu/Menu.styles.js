@@ -18,9 +18,11 @@ export const MenUButton = styled.div`
   padding: 10px;
   padding-right: 30px;
   border-bottom: 2px solid white;
+  border-color: ${(props) => (props.dark ? "black" : "white")};
   font-size: 1.5rem;
-  text-shadow: 1px 0px 5px white;
+  text-shadow: ${(props) => `1px 0px 5px ${props.dark ? "black" : "white"}`};
   transition: 500ms;
+  color: ${(props) => (props.dark ? "black" : "white")};
 `;
 
 export const MenuButtonTail = styled.div`
@@ -28,6 +30,7 @@ export const MenuButtonTail = styled.div`
   transform: skew(135deg);
   border-bottom: 2px solid white;
   border-right: 2px solid white;
+  border-color: ${(props) => (props.dark ? "black" : "white")};
   margin-bottom: -2px;
   margin-left: -14px;
 `;
