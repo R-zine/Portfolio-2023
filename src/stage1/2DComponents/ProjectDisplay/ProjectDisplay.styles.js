@@ -293,40 +293,6 @@ const fontAnime = keyframes`
     filter: blur(6px);
   }`;
 
-const opacityAnime = keyframes`
-    0% {
-    opacity: 0.1;
-  }
-
-  5% {
-    opacity: 0.7;
-  }
-
-  30% {
-    opacity: 0.4;
-  }
-
-  45% {
-    opacity: 0.6;
-  }
-
-  76% {
-    opacity: 0.4;
-  }
-
-  90% {
-    opacity: 0.8;
-  }
-
-  1%,
-  7%,
-  33%,
-  47%,
-  78%,
-  93% {
-    opacity: 0;
-  }`;
-
 const movementAnime = keyframes`
    0% {
     top: 0px;

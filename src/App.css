@@ -15,3 +15,7 @@
 .cubeHTMLTop {
   background-color: #00000000 !important;
 }
+
+::-webkit-scrollbar {
+  visibility: hidden;
+}

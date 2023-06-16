@@ -1,6 +1,11 @@
 import { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
+import { useFrame, useLoader } from "@react-three/fiber";
+import pointingImg from "./barcode.png";
 import gsap from "gsap";
+import { useScroll } from "@react-three/drei";
+import { useDispatch, useSelector } from "react-redux";
+import { setAboutCount } from "../../../app/aboutSlice";
 
 export const Ring = ({
   scale,
@@ -9,15 +14,38 @@ export const Ring = ({
   color,
   handleGlitchDisk,
   onClick,
+  isAbout,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const { value: offset, isBack } = useSelector((state) => state.aboutCounter);
 
   const intensity = useRef(0.05);
 
   const outerRingRef1 = useRef(null);
   const innerRingRef1 = useRef(null);
+  const surfaceRef = useRef(null);
 
   const groupRef = useRef(null);
+
+  const scroll = useScroll();
+
+  const dispatch = useDispatch();
+
+  useFrame(() => {
+    if (scale === 0.5 && !isBack && isAbout)
+      dispatch(setAboutCount(scroll.offset));
+  });
+
+  useEffect(() => {
+    if (offset || offset === 0) {
+      outerRingRef1.current.material.displacementScale = offset * 30;
+      innerRingRef1.current.material.displacementScale = offset * 60;
+      surfaceRef.current.material.displacementScale = offset * 60;
+    }
+  }, [offset]);
+
+  const pointingTexture = useLoader(THREE.TextureLoader, pointingImg);
 
   useEffect(() => {
     if (outerRingRef1.current) outerRingRef1.current.rotation.x = Math.PI / 2;
@@ -50,7 +78,7 @@ export const Ring = ({
       }}
       onClick={() => onClick()}
     >
-      <mesh position={[0, 0, 0]} receiveShadow castShadow>
+      <mesh position={[0, 0, 0]} ref={surfaceRef} receiveShadow castShadow>
         <ringGeometry args={[10, 12, 50]} />
         <meshStandardMaterial
           color={color}
@@ -58,6 +86,8 @@ export const Ring = ({
           metalness={1}
           emissive={color}
           emissiveIntensity={intensity.current}
+          displacementMap={pointingTexture}
+          displacementScale={0}
         />
       </mesh>
 
@@ -69,6 +99,10 @@ export const Ring = ({
           metalness={1}
           emissive={color}
           emissiveIntensity={intensity.current}
+          bumpMap={pointingTexture}
+          bumpScale={1}
+          displacementMap={pointingTexture}
+          displacementScale={0}
         />
       </mesh>
       <mesh position={[0, 0, -1]} ref={innerRingRef1} receiveShadow castShadow>
@@ -80,6 +114,10 @@ export const Ring = ({
           side={THREE.DoubleSide}
           emissive={color}
           emissiveIntensity={intensity.current}
+          bumpMap={pointingTexture}
+          bumpScale={1}
+          displacementMap={pointingTexture}
+          displacementScale={0}
         />
       </mesh>
     </group>

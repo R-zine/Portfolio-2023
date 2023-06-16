@@ -4,7 +4,7 @@ export const MenuButtonContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1005;
   color: white;
   display: flex;
   &:hover > div {
