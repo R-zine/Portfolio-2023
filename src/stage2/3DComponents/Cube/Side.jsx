@@ -61,6 +61,12 @@ export const Side = ({
     }
   }, [contactPhase, rigidRef]);
 
+  useEffect(() => {
+    if (Object.keys(isHovered).some((key) => isHovered[key]))
+      document.body.classList.add("button");
+    else document.body.classList.remove("button");
+  }, [isHovered]);
+
   const pointingTexture = useLoader(THREE.TextureLoader, pointingImg);
 
   const handleHoverChange = (key, newValue) =>
@@ -108,12 +114,9 @@ export const Side = ({
               emissive={"purple"}
               emissiveIntensity={0.1}
               side={THREE.DoubleSide}
-              // map={pointingTexture}
               bumpMap={pointingTexture}
               bumpScale={1}
               normalMap={pointingTexture}
-              // displacementMap={pointingTexture}
-              // displacementScale={10}
             />
           </Box>
         </RigidBody>
@@ -138,18 +141,11 @@ export const Side = ({
                 rotation={[0, Math.PI, 0]}
                 scale={10}
                 wrapperClass="cubeHTML"
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <div
                   style={{
@@ -166,18 +162,11 @@ export const Side = ({
                 rotation={[0, Math.PI, 0]}
                 scale={10}
                 wrapperClass="cubeHTML"
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <div
                   style={{
@@ -213,18 +202,11 @@ export const Side = ({
                   position={[0, 1.7, -1]}
                   rotation={[0, Math.PI, 0]}
                   scale={10}
-                  // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                  // portal={cubeRef} // Reference to target container (default=undefined)
                   transform // If true, applies matrix3d transformations (default=false)
                   castShadow
-                  // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                  // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                   occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                  // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                  // {...groupProps} // All THREE.Group props are valid
-                  // {...divProps} // All HTMLDivElement props are valid
                 >
                   <span
                     style={{
@@ -239,18 +221,11 @@ export const Side = ({
                   position={[0, 0.9, -1]}
                   rotation={[0, Math.PI, 0]}
                   scale={10}
-                  // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                  // portal={cubeRef} // Reference to target container (default=undefined)
                   transform // If true, applies matrix3d transformations (default=false)
                   castShadow
-                  // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                  // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                   occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                  // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                  // {...groupProps} // All THREE.Group props are valid
-                  // {...divProps} // All HTMLDivElement props are valid
                 >
                   <div
                     onPointerEnter={() => handleHoverChange("linkedin", true)}
@@ -266,7 +241,6 @@ export const Side = ({
                         ? "black"
                         : "#00000000",
                       transition: "0.5s",
-                      cursor: isHovered.linkedin ? "pointer" : "auto",
                       width: isHovered.linkedin ? 95 : 75,
                     }}
                   >
@@ -308,18 +282,11 @@ export const Side = ({
                   position={[0, 0, -1]}
                   rotation={[0, Math.PI, 0]}
                   scale={10}
-                  // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                  // portal={cubeRef} // Reference to target container (default=undefined)
                   transform // If true, applies matrix3d transformations (default=false)
                   castShadow
-                  // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                  // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                   occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                  // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                  // {...groupProps} // All THREE.Group props are valid
-                  // {...divProps} // All HTMLDivElement props are valid
                 >
                   <div
                     onPointerEnter={() => handleHoverChange("git", true)}
@@ -333,7 +300,6 @@ export const Side = ({
                       padding: 1.5,
                       backgroundColor: isHovered.git ? "black" : "#00000000",
                       transition: "0.5s",
-                      cursor: isHovered.git ? "pointer" : "auto",
                       width: isHovered.git ? 95 : 75,
                     }}
                   >
@@ -373,18 +339,11 @@ export const Side = ({
                   position={[0, -0.9, -1]}
                   rotation={[0, Math.PI, 0]}
                   scale={10}
-                  // prepend // Project content behind the canvas (default: false)
                   distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                   zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                  // portal={cubeRef} // Reference to target container (default=undefined)
                   transform // If true, applies matrix3d transformations (default=false)
                   castShadow
-                  // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                  // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                   occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                  // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                  // {...groupProps} // All THREE.Group props are valid
-                  // {...divProps} // All HTMLDivElement props are valid
                 >
                   <div
                     onPointerEnter={() => handleHoverChange("reddit", true)}
@@ -398,7 +357,6 @@ export const Side = ({
                       padding: 1.5,
                       backgroundColor: isHovered.reddit ? "black" : "#00000000",
                       transition: "0.5s",
-                      cursor: isHovered.reddit ? "pointer" : "auto",
                       width: isHovered.reddit ? 95 : 75,
                     }}
                   >
@@ -459,18 +417,11 @@ export const Side = ({
                 position={[0, 1.7, -1]}
                 rotation={[0, Math.PI, 0]}
                 scale={10}
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <span
                   style={{
@@ -485,18 +436,11 @@ export const Side = ({
                 position={[0, 0.9, -1]}
                 rotation={[0, Math.PI, 0]}
                 scale={10}
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <div
                   onPointerEnter={() => handleHoverChange("email", true)}
@@ -508,7 +452,6 @@ export const Side = ({
                     border: "1px solid black",
                     borderRadius: 1.5,
                     transition: "0.5s",
-                    cursor: isHovered.email ? "pointer" : "auto",
                     width: isHovered.email ? 115 : 105,
                   }}
                 >
@@ -519,18 +462,11 @@ export const Side = ({
                 position={[0, -0.3, -1]}
                 rotation={[0, Math.PI, 0]}
                 scale={10}
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
-                // sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <div
                   onPointerEnter={() => handleHoverChange("message", true)}
@@ -540,7 +476,6 @@ export const Side = ({
                     border: "1px solid black",
                     borderRadius: 1.5,
                     transition: "0.5s",
-                    cursor: isHovered.message ? "pointer" : "auto",
                     width: 105,
                     justifyItems: "center",
                     justifyContent: "center",
@@ -553,18 +488,12 @@ export const Side = ({
                 position={[0, -1.8, -1]}
                 rotation={[0, Math.PI, 0]}
                 scale={8}
-                // prepend // Project content behind the canvas (default: false)
                 distanceFactor={1} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
                 zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-                // portal={cubeRef} // Reference to target container (default=undefined)
                 transform // If true, applies matrix3d transformations (default=false)
                 castShadow
                 sprite={true} // Renders as sprite, but only in transform mode (default=false)
-                // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-                // onOcclude={(// visible) => null} // Callback when the visibility changes (default: undefined)
-                // {...groupProps} // All THREE.Group props are valid
-                // {...divProps} // All HTMLDivElement props are valid
               >
                 <div
                   style={{

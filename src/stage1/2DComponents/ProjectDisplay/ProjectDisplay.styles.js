@@ -453,7 +453,7 @@ export const MenuButtonContainer = styled.div`
   display: flex;
   &:hover > div {
     text-indent: 30px;
-    cursor: pointer;
+
     text-shadow: -30px 0px 5px white;
   }
 `;

@@ -60,8 +60,14 @@ export const Ring = ({
   }, [groupRef, pos, rotationMultiplier]);
 
   useEffect(() => {
-    if (isHovered) gsap.to(intensity, { current: 0.5, duration: 0.2 });
-    if (!isHovered) gsap.to(intensity, { current: 0.05, duration: 0.2 });
+    if (isHovered) {
+      gsap.to(intensity, { current: 0.5, duration: 0.2 });
+      document.body.classList.add("button");
+    }
+    if (!isHovered) {
+      gsap.to(intensity, { current: 0.05, duration: 0.2 });
+      document.body.classList.remove("button");
+    }
   }, [isHovered]);
 
   return (

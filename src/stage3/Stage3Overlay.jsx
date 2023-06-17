@@ -284,6 +284,7 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
     <>
       <>
         <MenuButtonContainer
+          className="button"
           onClick={() => {
             setIsBack(true);
             timeline.timeScale(5).reverse();
@@ -408,6 +409,7 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
           </Stack>
         </Curtain>
         <EndTile
+          className="button"
           top={20}
           left={40}
           width={20}
@@ -419,6 +421,7 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
         </EndTile>
 
         <EndTile
+          className="button"
           top={65}
           left={42}
           width={16}

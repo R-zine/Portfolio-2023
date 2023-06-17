@@ -23,7 +23,10 @@ export const Menu = () => {
 
   return (
     <>
-      <MenuButtonContainer onClick={() => setIsExpanded((p) => !p)}>
+      <MenuButtonContainer
+        className="button"
+        onClick={() => setIsExpanded((p) => !p)}
+      >
         <MenUButton>Menu</MenUButton>
         <MenuButtonTail />
       </MenuButtonContainer>

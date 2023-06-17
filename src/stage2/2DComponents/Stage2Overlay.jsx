@@ -56,7 +56,7 @@ export const Stage2Overlay = ({ back }) => {
       )}
 
       {contactPhase !== 4 && !isEnd && (
-        <MenuButtonContainer onClick={() => setIsEnd(true)}>
+        <MenuButtonContainer className="button" onClick={() => setIsEnd(true)}>
           <MenUButton dark>Back</MenUButton>
           <MenuButtonTail dark />
         </MenuButtonContainer>

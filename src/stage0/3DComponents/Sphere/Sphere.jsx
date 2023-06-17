@@ -23,8 +23,14 @@ export const Sphere = ({ handleClick }) => {
   }, []);
 
   useEffect(() => {
-    if (isHovered) gsap.to(scale, { current: 1.5, duration: 0.2 });
-    if (!isHovered) gsap.to(scale, { current: 1.02, duration: 0.2 });
+    if (isHovered) {
+      gsap.to(scale, { current: 1.5, duration: 0.2 });
+      document.body.classList.add("button");
+    }
+    if (!isHovered) {
+      gsap.to(scale, { current: 1.02, duration: 0.2 });
+      document.body.classList.remove("button");
+    }
   }, [isHovered]);
 
   return (

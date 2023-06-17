@@ -11,7 +11,6 @@ export const FooterContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
   &:hover > div {
-    cursor: pointer;
     text-shadow: 30px 0px 5px white;
   }
 `;

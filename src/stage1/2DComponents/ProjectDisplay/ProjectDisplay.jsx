@@ -117,12 +117,14 @@ export const ProjectDisplay = ({ back }) => {
             )}
           </Description>
         </Container>
-        <Container width={12} height={4} top={92} left={44}>
+        <Container width={12} height={4} top={92} left={44} className="button">
           <ButtonsContainer>
             <Button type={"left"} onClick={() => dispatch(decrement())}>
               {"<"}
             </Button>
-            <div style={{ fontSize: "0.8vw" }}>{projectIndex}</div>
+            <div style={{ fontSize: "0.8vw" }}>
+              {projectIndex === 0 ? "???" : projectIndex}
+            </div>
             <Button onClick={() => dispatch(increment())}>{">"}</Button>
           </ButtonsContainer>
         </Container>
@@ -134,7 +136,7 @@ export const ProjectDisplay = ({ back }) => {
             {isHovered.three ? "Go to site" : "See source"}
           </CursorReplace>
         )}
-        <MenuButtonContainer onClick={() => setIsBack(true)}>
+        <MenuButtonContainer className="button" onClick={() => setIsBack(true)}>
           <MenUButton>Back</MenUButton>
           <MenuButtonTail />
         </MenuButtonContainer>

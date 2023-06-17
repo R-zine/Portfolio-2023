@@ -32,6 +32,7 @@ export const Footer = () => {
 
   return (
     <FooterContainer
+      className="button"
       onMouseEnter={() => timeline.timeScale(1).play()}
       onMouseLeave={() => timeline.timeScale(2).reverse()}
     >
