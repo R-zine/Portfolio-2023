@@ -2,8 +2,15 @@ import { Sparkles } from "@react-three/drei";
 import { Side } from "./Side";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementContact } from "../../../app/contactsCounterSlice";
+import { useEffect, useState } from "react";
 
 export const Cube = () => {
+  const [isInitial, setIsInitial] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => setIsInitial(false), 8000);
+  }, []);
+
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
   const dispatch = useDispatch();
@@ -18,7 +25,9 @@ export const Cube = () => {
         rotateX={Math.PI / 2}
         rotateZ={Math.PI}
         handleClick={
-          contactPhase === 1 ? () => dispatch(incrementContact()) : null
+          contactPhase === 1 && !isInitial
+            ? () => dispatch(incrementContact())
+            : null
         }
       />
       {/* bottom */}
@@ -35,7 +44,9 @@ export const Cube = () => {
         position={[2.5, -2.5, 0]}
         rotateY={Math.PI / 2}
         handleClick={
-          contactPhase === 2 ? () => dispatch(incrementContact()) : null
+          contactPhase === 2 && !isInitial
+            ? () => dispatch(incrementContact())
+            : null
         }
       />
       {/* left */}
@@ -44,7 +55,9 @@ export const Cube = () => {
         position={[0, -2.5, 2.5]}
         rotateZ={Math.PI / 2}
         handleClick={
-          contactPhase === 0 ? () => dispatch(incrementContact()) : null
+          contactPhase === 0 && !isInitial
+            ? () => dispatch(incrementContact())
+            : null
         }
       />
       {/* right */}

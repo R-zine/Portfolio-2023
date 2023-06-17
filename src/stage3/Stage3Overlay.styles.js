@@ -11,6 +11,26 @@ const glitchBorder = keyframes`
     6%  {transform: translate(-2px, 2px);}
     7% {transform: translate(0, 0); border-color: white}`;
 
+export const ScrollDown = styled.div`
+  position: fixed;
+  width: 10vw;
+  height: 5vh;
+  top: 89vh;
+  left: 45vw;
+  display: flex;
+  flex-direction: column;
+  z-index: 1005;
+  color: white;
+  font-size: 2vh;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0;
+
+  & > div > svg {
+    filter: invert(100%);
+  }
+`;
+
 export const Tile = styled.div`
   position: fixed;
   top: ${(props) => (props.top ? `${props.top}vh` : 0)};

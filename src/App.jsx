@@ -26,6 +26,8 @@ import { Stage3Overlay } from "./stage3/Stage3Overlay";
 import { EffectsStage3 } from "./stage3/Effects";
 import { setBackState } from "./app/aboutSlice";
 import { setMain } from "./app/mainSlice";
+import { setContactCount } from "./app/contactsCounterSlice";
+import { Footer } from "./Footer/Footer";
 
 function App() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -54,6 +56,7 @@ function App() {
     setIsGlitch(false);
     setIsProject(false);
     setIsContact(false);
+    dispatch(setContactCount(0));
     setIsAbout(false);
     dispatch(setBackState(false));
     gsap.to(cameraRef.current.position, { x: 0, y: 0, z: 60 });
@@ -108,8 +111,10 @@ function App() {
         500
       );
     }
-    if (contactPhase === 4) {
-      setTimeout(() => dispatch(setMain(0)), 3700);
+    if (contactPhase === 4 && stage === 2) {
+      setTimeout(() => {
+        dispatch(setMain(0));
+      }, 3700);
     }
   }, [controlsRef?.current?.target, stage, contactPhase]);
 
@@ -259,7 +264,16 @@ function App() {
       {stage === 0 && !isAbout && <Menu />}
       {stage === 1 && <ProjectDisplay pos={pos} back={handleBack} />}
       {stage === 2 && <Stage2Overlay back={handleBack} />}
-      {isAbout && <Stage3Overlay handleBack={handleBack} />}
+      {isAbout && (
+        <Stage3Overlay
+          handleBack={handleBack}
+          handleContact={() => {
+            setIsAbout(false);
+            setIsContact(true);
+          }}
+        />
+      )}
+      <Footer />
 
       <Canvas
         ref={canvasRef}

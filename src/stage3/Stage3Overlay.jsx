@@ -14,6 +14,7 @@ import {
   ToolsText,
   Stack,
   EndTile,
+  ScrollDown,
 } from "./Stage3Overlay.styles";
 import gsap from "gsap";
 import {
@@ -24,7 +25,7 @@ import {
 
 const stackDelay = 1 / 2;
 
-export const Stage3Overlay = ({ handleBack }) => {
+export const Stage3Overlay = ({ handleBack, handleContact }) => {
   const [isBack, setIsBack] = useState(false);
 
   const offset = useSelector((state) => state.aboutCounter.value);
@@ -43,6 +44,9 @@ export const Stage3Overlay = ({ handleBack }) => {
     }, 100);
     return () => clearInterval(glitchInteval);
   }, [isGlitch]);
+
+  const scrollContRef = useRef(null);
+  const svgRef = useRef(null);
 
   const a1 = useRef(null);
   const a2 = useRef(null);
@@ -198,6 +202,7 @@ export const Stage3Overlay = ({ handleBack }) => {
           top: "100vh",
           ease: "power4.out",
           duration: 2.5,
+          delay: 0.8,
         })
         .to(
           stackRef.current,
@@ -246,7 +251,34 @@ export const Stage3Overlay = ({ handleBack }) => {
       setIsBack(false);
       handleBack();
     }
+    if (offset > 0.02) {
+      const scrollOutTl = gsap.timeline();
+      scrollOutTl
+        .to(scrollContRef.current, { opacity: 0 })
+        .set(scrollContRef.current, { display: "none" });
+    }
   }, [offset, timeline, isBack]);
+
+  useEffect(() => {
+    if (scrollContRef.current && svgRef) {
+      const scrollTL = gsap.timeline();
+
+      gsap.to(scrollContRef.current, {
+        opacity: 1,
+        duration: 1,
+        delay: 0.5,
+      });
+
+      scrollTL
+        .to(scrollContRef.current, {
+          height: "7vh",
+          duration: 2,
+          ease: "power4.out",
+        })
+        .to(svgRef.current, { opacity: 0, duration: 2 }, "<")
+        .repeat(-1);
+    }
+  }, [scrollContRef.current, svgRef.current]);
 
   return (
     <>
@@ -278,6 +310,20 @@ export const Stage3Overlay = ({ handleBack }) => {
           <MenUButton>Back</MenUButton>
           <MenuButtonTail />
         </MenuButtonContainer>
+
+        <ScrollDown ref={scrollContRef}>
+          <div>Scroll</div>
+
+          <div ref={svgRef}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1em"
+              viewBox="0 0 448 512"
+            >
+              <path d="M246.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 402.7 361.4 265.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3l-160 160zm160-352l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L224 210.7 361.4 73.4c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3z" />
+            </svg>
+          </div>
+        </ScrollDown>
       </>
       <>
         <Tile top={120} left={5} ref={a1} opacity animeDelay={0.5}>
@@ -361,7 +407,14 @@ export const Stage3Overlay = ({ handleBack }) => {
             HTML/CSS/JS
           </Stack>
         </Curtain>
-        <EndTile top={20} left={40} width={20} opacity ref={reachRef}>
+        <EndTile
+          top={20}
+          left={40}
+          width={20}
+          opacity
+          ref={reachRef}
+          onClick={handleContact}
+        >
           Reach out
         </EndTile>
 
