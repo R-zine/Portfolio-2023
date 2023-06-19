@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, Suspense } from "react";
 import "./App.css";
-import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -27,7 +26,8 @@ import { EffectsStage3 } from "./stage3/Effects";
 import { setBackState } from "./app/aboutSlice";
 import { setMain } from "./app/mainSlice";
 import { setContactCount } from "./app/contactsCounterSlice";
-import { Footer } from "./Footer/Footer";
+import { Footer } from "./Footer";
+import { Loader } from "./Loader";
 
 function App() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -259,7 +259,7 @@ function App() {
   }, [pos, stage, cameraRef.current, isStage2Initial, contactPhase]);
 
   return (
-    <Suspense fallback={null}>
+    <>
       {isProject && stage === 0 && <ScreenEffect />}
       {stage === 0 && !isAbout && <Menu />}
       {stage === 1 && <ProjectDisplay pos={pos} back={handleBack} />}
@@ -385,7 +385,7 @@ function App() {
           <Lights />
         </Physics>
       </Canvas>
-    </Suspense>
+    </>
   );
 }
 
