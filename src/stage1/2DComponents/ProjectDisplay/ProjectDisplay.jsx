@@ -16,6 +16,7 @@ import {
   MenUButton,
   MenuButtonTail,
   Back,
+  ImageCont,
 } from "./ProjectDisplay.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment } from "../../../app/projectCounterSlice";
@@ -57,6 +58,9 @@ export const ProjectDisplay = ({ back }) => {
           onMouseEnter={() => handleHover("one", true)}
           onMouseLeave={() => handleHover("one", false)}
           isHovered={isHovered.one}
+          onClick={() =>
+            window.open(projects[projectIndex - 1].source, "blank")
+          }
         >
           <TitleContainer>
             <Title>{projectIndex === 0 ? "??????" : "Description:"}</Title>
@@ -75,6 +79,9 @@ export const ProjectDisplay = ({ back }) => {
           onMouseEnter={() => handleHover("two", true)}
           onMouseLeave={() => handleHover("two", false)}
           isHovered={isHovered.two}
+          onClick={() =>
+            window.open(projects[projectIndex - 1].source, "blank")
+          }
         >
           <TitleContainer>
             <Title delay={0.6}>{projectIndex === 0 ? "??????" : "Tech:"}</Title>
@@ -109,11 +116,20 @@ export const ProjectDisplay = ({ back }) => {
             </Title>
             <Tail width={23} />
           </TitleContainer>
-          <Description delay={1.2} isQuestion={projectIndex === 0}>
+          <Description
+            delay={1.2}
+            isQuestion={projectIndex === 0}
+            onClick={() =>
+              window.open(projects[projectIndex - 1].site, "blank")
+            }
+          >
             {projectIndex === 0 ? (
               <QuestionMark>?</QuestionMark>
             ) : (
-              <Image src={projects[projectIndex - 1].preview} />
+              <ImageCont>
+                <Image src={projects[projectIndex - 1].preview[0]} />
+                <Image src={projects[projectIndex - 1].preview[1]} />
+              </ImageCont>
             )}
           </Description>
         </Container>

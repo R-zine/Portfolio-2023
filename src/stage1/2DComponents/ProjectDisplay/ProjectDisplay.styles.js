@@ -425,6 +425,14 @@ export const QuestionMark = styled.div`
   height: 100%;
 `;
 
+export const ImageCont = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4vh;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Image = styled.img`
   width: 95%;
   height: 95%;
