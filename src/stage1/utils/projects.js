@@ -1,9 +1,9 @@
-import stackr1 from "../assets/stackr1.jpg";
-import stackr2 from "../assets/stackr2.jpg";
-import port20211 from "../assets/port20211.jpg";
-import port20212 from "../assets/port20212.jpg";
+import stackr1 from "stackr1.jpg";
+import stackr2 from "stackr2.jpg";
+import port20211 from "port20211.jpg";
+import port20212 from "port20212.jpg";
 
-import wiki from "../assets/wiki.jpg";
+import wiki from "wiki.jpg";
 
 class Project {
   constructor(description, tech, preview, source, site) {
