@@ -44,9 +44,7 @@ export const Stage2Overlay = ({ back }) => {
 
   return (
     <>
-      {isNothing && (
-        <NothingIs ref={nothingRef}>Nothing is what it seems.</NothingIs>
-      )}
+      {isNothing && <NothingIs ref={nothingRef}>Hide and Seek</NothingIs>}
       {isEnd && (
         <EndScreen>
           {contactPhase === 3 || contactPhase === 5

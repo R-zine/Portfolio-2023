@@ -11,6 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <Suspense fallback={<Loader />}>
+        <Loader isGo />
         <App />
       </Suspense>
     </Provider>

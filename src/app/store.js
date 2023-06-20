@@ -3,6 +3,7 @@ import projectCounterReducer from "./projectCounterSlice";
 import contactsCounterReducer from "./contactsCounterSlice";
 import aboutCounterReducer from "./aboutSlice";
 import mainReducer from "./mainSlice";
+import loaderReducer from "./loaderSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     contactCounter: contactsCounterReducer,
     aboutCounter: aboutCounterReducer,
     main: mainReducer,
+    loader: loaderReducer,
   },
 });

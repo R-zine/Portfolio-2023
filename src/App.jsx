@@ -27,7 +27,6 @@ import { setBackState } from "./app/aboutSlice";
 import { setMain } from "./app/mainSlice";
 import { setContactCount } from "./app/contactsCounterSlice";
 import { Footer } from "./Footer";
-import { Loader } from "./Loader";
 
 function App() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -134,29 +133,25 @@ function App() {
         dispatch(setMain(2));
         gsap.set(canvasRef.current, { y: 0, duration: 1, ease: "power4" });
         gsap.to(canvasRef.current, { opacity: 1, duration: 1 });
-        setTimeout(
-          () => {
-            cameraTL
-              .to(cameraRef.current.position, {
-                z: 20,
-                x: 27,
-                y: 8,
+        setTimeout(() => {
+          cameraTL
+            .to(cameraRef.current.position, {
+              z: 20,
+              x: 27,
+              y: 8,
+              duration: 8,
+            })
+            .to(
+              controlsRef.current.target,
+              {
+                x: 10,
+                z: -25,
+                y: -3,
                 duration: 8,
-              })
-              .to(
-                controlsRef.current.target,
-                {
-                  x: 10,
-                  z: -25,
-                  y: -3,
-                  duration: 8,
-                },
-                "<"
-              );
-          },
-
-          1500
-        );
+              },
+              "<"
+            );
+        }, 1500);
       }, 2500);
     }
   }, [canvasRef, isContact]);
