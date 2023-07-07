@@ -100,39 +100,45 @@ export const ProjectDisplay = ({ back }) => {
             </FlexContainer>
           )}
         </Container>
-        <Container
-          width={30}
-          height={75}
-          top={10}
-          left={65}
-          delay={1.8}
-          onMouseEnter={() => handleHover("three", true)}
-          onMouseLeave={() => handleHover("three", false)}
-          isHovered={isHovered.three}
-        >
-          <TitleContainer>
-            <Title delay={2.1}>
-              {projectIndex === 0 ? "??????" : "Preview:"}
-            </Title>
-            <Tail width={23} />
-          </TitleContainer>
-          <Description
-            delay={1.2}
-            isQuestion={projectIndex === 0}
-            onClick={() =>
-              window.open(projects[projectIndex - 1].site, "blank")
-            }
+        {projectIndex !== 7 && (
+          <Container
+            width={30}
+            height={75}
+            top={10}
+            left={65}
+            delay={1.8}
+            onMouseEnter={() => handleHover("three", true)}
+            onMouseLeave={() => handleHover("three", false)}
+            isHovered={isHovered.three}
           >
-            {projectIndex === 0 ? (
-              <QuestionMark>?</QuestionMark>
-            ) : (
-              <ImageCont>
-                <Image src={projects[projectIndex - 1].preview[0]} />
-                <Image src={projects[projectIndex - 1].preview[1]} />
-              </ImageCont>
-            )}
-          </Description>
-        </Container>
+            <TitleContainer>
+              <Title delay={2.1}>
+                {projectIndex === 0 ? "??????" : "Preview:"}
+              </Title>
+              <Tail width={23} />
+            </TitleContainer>
+            <Description
+              delay={1.2}
+              isQuestion={projectIndex === 0}
+              onClick={() =>
+                window.open(projects[projectIndex - 1].site, "blank")
+              }
+            >
+              {projectIndex === 0 ? (
+                <QuestionMark>?</QuestionMark>
+              ) : projects[projectIndex - 1].preview.length === 2 ? (
+                <ImageCont>
+                  <Image src={projects[projectIndex - 1].preview[0]} />
+                  <Image src={projects[projectIndex - 1].preview[1]} />
+                </ImageCont>
+              ) : (
+                <ImageCont single>
+                  <Image src={projects[projectIndex - 1].preview[0]} />
+                </ImageCont>
+              )}
+            </Description>
+          </Container>
+        )}
         <Container width={12} height={4} top={92} left={44} className="button">
           <ButtonsContainer>
             <Button type={"left"} onClick={() => dispatch(decrement())}>
@@ -144,14 +150,19 @@ export const ProjectDisplay = ({ back }) => {
             <Button onClick={() => dispatch(increment())}>{">"}</Button>
           </ButtonsContainer>
         </Container>
-        {Object.keys(isHovered).some((k) => isHovered[k]) && (
-          <CursorReplace
-            top={isHovered.one ? 41 : 86}
-            left={isHovered.three ? 90 : 30}
-          >
-            {isHovered.three ? "Go to site" : "See source"}
-          </CursorReplace>
-        )}
+        {Object.keys(isHovered).some((k) => isHovered[k]) &&
+          projectIndex !== 0 && (
+            <CursorReplace
+              top={isHovered.one ? 41 : 86}
+              left={isHovered.three ? 90 : 30}
+            >
+              {!isHovered.three
+                ? "See source"
+                : projectIndex === 7
+                ? "Back to home"
+                : "Go to site"}
+            </CursorReplace>
+          )}
         <MenuButtonContainer className="button" onClick={() => setIsBack(true)}>
           <MenUButton>Back</MenUButton>
           <MenuButtonTail />

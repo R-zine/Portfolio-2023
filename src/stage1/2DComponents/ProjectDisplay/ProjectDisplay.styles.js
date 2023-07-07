@@ -330,11 +330,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #00000099;
+  background-color: #000000aa;
   animation: ${glitchBorder} 3s ease infinite;
   animation-play-state: ${(props) => (props.isHovered ? "paused" : "running")};
   animation-delay: ${(props) => (props.delay ? props.delay : 0)}s;
   cursor: none;
+  text-shadow: 0 0 5px black, 0 0 5px black, 0 0 5px black, 0 0 10px black,
+    0 0 10px black, 0 0 10px black;
 `;
 
 export const TitleContainer = styled.div`
@@ -431,6 +433,7 @@ export const ImageCont = styled.div`
   gap: 4vh;
   align-items: center;
   justify-content: center;
+  height: ${(props) => (props.single ? "100%" : "auto")};
 `;
 
 export const Image = styled.img`
@@ -457,8 +460,14 @@ export const MenuButtonContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 1000;
-  color: white;
+  color: ${(props) => (props.black ? "black" : "white")};
+
   display: flex;
+
+  & > div {
+    border-color: ${(props) => (props.black ? "black" : "white")};
+  }
+
   &:hover > div {
     text-indent: 30px;
 

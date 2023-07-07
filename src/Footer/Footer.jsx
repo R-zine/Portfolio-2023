@@ -1,6 +1,7 @@
-import { useRef, useMemo, forwardRef } from "react";
+import { useRef, useMemo } from "react";
 import { FooterContainer, FooterTail, FooterText } from "./Footer.styles";
 import gsap from "gsap";
+import { useSelector } from "react-redux";
 
 export const Footer = () => {
   const t1 = useRef(null);

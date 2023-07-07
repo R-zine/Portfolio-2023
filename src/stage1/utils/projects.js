@@ -24,7 +24,39 @@ export const projects = [
     "https://ivanradev.netlify.app/"
   ),
   new Project(
-    "A portfolio site for an architect, featuring many different types of animations and an unique styling approach. The website is fully responsive and has a custom 3D model in the contacts' page.",
+    "A full-stack Snake game built on NextJS with PostegreSQL integration through Prisma. The user details and preferences are saved on the DB (Supabase). The speed, growth-rate, and size of the playing board are adjustable. If the user is viewing the App on a mobile device arrow buttons are automatically rendered.",
+    ["NextJS", "Prisma (endpoints and DB management)", "PostgreSQL", "SASS"],
+    ["./snake1.jpg", "./snake2.jpg"],
+    "https://github.com/R-zine/snake-next-js",
+    "https://next-snake-taupe.vercel.app/"
+  ),
+  new Project(
+    "This is my personal traditional paintings' website. It is built on React/Vite and uses Wordpress as a backend. Animations are powered by eact Spring and GSAP.",
+    [
+      "React",
+      "Redux Toolkit (state and query management)",
+      "WordPress API",
+      "Emotion/styled",
+      "GSAP",
+      "React Spring",
+    ],
+    ["./art1.jpg", "./art2.jpg"],
+    "https://github.com/R-zine/personal-paintings-website",
+    "https://ivanradevart.netlify.app/"
+  ),
+  new Project(
+    "Item Hunter is an AI-powered game in which the user gets points when they find one of 300 items in the real world. This App is built on React Native (Expo) and has TensorFlowJS object recognition. The score and current selection are handled via Redux with persistors. The built .APK is available in the GitHub repository.",
+    [
+      "React Native with Expo",
+      "Redux with persistors (state management and saving data locally)",
+      "TensorFlowJS AI integration",
+    ],
+    ["./native.jpg"],
+    "https://github.com/R-zine/ItemHunter",
+    "https://appetize.io/embed/wmt2t4k2p3agh4tttqwpm3ncpy"
+  ),
+  new Project(
+    "An architectural portfolio website, featuring many different types of animations and an unique styling approach. The website is fully responsive and has a custom 3D model in the contacts' page.",
     [
       "Vite/ React with routing",
       "GSAP",
@@ -32,26 +64,21 @@ export const projects = [
       "React Spring",
       "React Three Fiber (for the Contacts page)",
     ],
-    ["./arch1.jpg", "./arch2.jpg"]
+    ["./arch1.jpg", "./arch2.jpg"],
+    "https://github.com/R-zine/architect-portfolio",
+    "https://dradeva.netlify.app/"
   ),
   new Project(
-    "A real-time Wikipedia search page that offers search results with snippets together with voice recognition.",
-    ["Vanilla JS", "Speech recognition API"],
-    "wiki"
-  ),
-  new Project(
-    "A real-time Wikipedia search page that offers search results with snippets together with voice recognition.",
-    ["Vanilla JS", "Speech recognition API"],
-    "wiki"
-  ),
-  new Project(
-    "A real-time Wikipedia search page that offers search results with snippets together with voice recognition.",
-    ["Vanilla JS", "Speech recognition API"],
-    "wiki"
-  ),
-  new Project(
-    "A real-time Wikipedia search page that offers search results with snippets together with voice recognition.",
-    ["Vanilla JS", "Speech recognition API"],
-    "wiki"
+    "Personal portfolio website 2023",
+    [
+      "React / Vite",
+      "React Three Fiber / Drei",
+      "React Rapier (3D engine)",
+      "GSAP",
+      "Emotion / Styled",
+    ],
+    [""],
+    "",
+    ""
   ),
 ];

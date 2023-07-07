@@ -11,11 +11,11 @@ export const projectCounterSlice = createSlice({
   initialState,
   reducers: {
     increment: (state) => {
-      if (state.value === fullCount) state.value = 0;
+      if (state.value === fullCount) state.value = 1;
       else state.value += 1;
     },
     decrement: (state) => {
-      if (state.value === 0) state.value = fullCount;
+      if (state.value === 1) state.value = fullCount;
       else state.value -= 1;
     },
   },

@@ -191,7 +191,7 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
         .call(handleTextChange, ["Rapier"], "+=" + stackDelay)
         .call(handleTextChange, ["CannonJS"], "+=" + stackDelay)
         .call(handleTextChange, ["Astro"], "+=" + stackDelay)
-        .call(handleTextChange, ["Prisma/SQLite"], "+=" + stackDelay)
+        .call(handleTextChange, ["Prisma/SQL"], "+=" + stackDelay)
         .call(handleTextChange, ["Node"], "+=" + stackDelay)
         .set(noOverflowLeft.current, { display: "none" })
         .set(noOverflowRight.current, { display: "none" })
