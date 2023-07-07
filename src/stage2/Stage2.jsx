@@ -17,8 +17,13 @@ export const Stage2 = () => {
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
+  const ref = useRef(null);
+
   useEffect(() => {
-    window.fogInterval = setInterval(() => setHelperCount((p) => p + 1), 50);
+    window.fogInterval = setInterval(
+      () => !ref.current && setHelperCount((p) => p + 1),
+      50
+    );
 
     return () => window.removeInterval(fogInterval);
   }, []);
@@ -40,7 +45,16 @@ export const Stage2 = () => {
     <>
       <Cube />
       <Floor />
-      {helperCount && <fog attach="fog" color={"white"} near={22} far={60} />}
+      {helperCount && (
+        <fog
+          key={helperCount}
+          ref={ref}
+          attach="fog"
+          color={"white"}
+          near={22}
+          far={60}
+        />
+      )}
       <color attach="background" args={["#ffffff"]} />
       <EffectComposer>
         {!isGlitch && (
