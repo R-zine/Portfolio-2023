@@ -5,8 +5,8 @@ export const NothingIs = styled.div`
   top: 80vh;
   left: 0;
   width: 100vw;
-  height: 300px;
-  font-size: 120px;
+  height: 15vh;
+  font-size: 12vmin;
   z-index: 1000;
   text-shadow: 2px 2px 10px black;
 `;

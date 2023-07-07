@@ -302,6 +302,12 @@ export const Side = ({
                       onPointerLeave={() =>
                         handleHoverChange("linkedin", false)
                       }
+                      onClick={() =>
+                        window.open(
+                          "https://www.linkedin.com/in/ivan-radev/",
+                          "_blank"
+                        )
+                      }
                       style={{
                         color: isHovered.linkedin ? "white" : "black",
                         fontSize: 10,
@@ -329,6 +335,9 @@ export const Side = ({
                   <div
                     onPointerEnter={() => handleHoverChange("git", true)}
                     onPointerLeave={() => handleHoverChange("git", false)}
+                    onClick={() =>
+                      window.open("https://github.com/R-zine", "_blank")
+                    }
                     style={{
                       fontSize: 16,
                       display: "flex",
@@ -386,6 +395,12 @@ export const Side = ({
                   <div
                     onPointerEnter={() => handleHoverChange("reddit", true)}
                     onPointerLeave={() => handleHoverChange("reddit", false)}
+                    onClick={() =>
+                      window.open(
+                        "https://www.reddit.com/user/IvanRadevHorror",
+                        "_blank"
+                      )
+                    }
                     style={{
                       fontSize: 16,
                       display: "flex",

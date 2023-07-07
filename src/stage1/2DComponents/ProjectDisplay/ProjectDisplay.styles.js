@@ -455,44 +455,6 @@ export const CursorReplace = styled.div`
   background-color: #00000099;
 `;
 
-export const MenuButtonContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  color: ${(props) => (props.black ? "black" : "white")};
-
-  display: flex;
-
-  & > div {
-    border-color: ${(props) => (props.black ? "black" : "white")};
-  }
-
-  &:hover > div {
-    text-indent: 30px;
-
-    text-shadow: -30px 0px 5px white;
-  }
-`;
-
-export const MenUButton = styled.div`
-  padding: 10px;
-  padding-right: 30px;
-  border-bottom: 2px solid white;
-  font-size: 1.5rem;
-  text-shadow: 1px 0px 5px white;
-  transition: 500ms;
-`;
-
-export const MenuButtonTail = styled.div`
-  width: 40px;
-  transform: skew(135deg);
-  border-bottom: 2px solid white;
-  border-right: 2px solid white;
-  margin-bottom: -2px;
-  margin-left: -14px;
-`;
-
 export const Back = styled.div`
   position: fixed;
   left: 0;

@@ -12,12 +12,14 @@ import {
   TechContainer,
   Title,
   TitleContainer,
-  MenuButtonContainer,
-  MenUButton,
-  MenuButtonTail,
   Back,
   ImageCont,
 } from "./ProjectDisplay.styles";
+import {
+  MenuButtonContainer,
+  MenUButton,
+  MenuButtonTail,
+} from "../../../stage0/2DComponents/Menu/Menu.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment } from "../../../app/projectCounterSlice";
 import { projects } from "../../utils/projects";
