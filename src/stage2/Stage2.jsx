@@ -18,7 +18,7 @@ export const Stage2 = () => {
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
   useEffect(() => {
-    setTimeout(() => setIsInitial(false));
+    setTimeout(() => setIsInitial(false), 200);
   }, []);
 
   useEffect(() => {
