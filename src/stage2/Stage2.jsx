@@ -13,12 +13,16 @@ import { useEffect, useState } from "react";
 export const Stage2 = () => {
   const [isInverted, setIsInverted] = useState(false);
   const [isGlitch, setIsGlitch] = useState(false);
-  const [isInitial, setIsInitial] = useState(true);
+  const [helperCount, sethelperCount] = useState(true);
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
+  const fogRef = useRef(null);
+
   useEffect(() => {
-    setTimeout(() => setIsInitial(false), 50);
+    window.fogInterval = setInterval(() => setHelperCount((p) => p + 1), 50);
+
+    return () => window.removeInterval(fogInterval);
   }, []);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export const Stage2 = () => {
     <>
       <Cube />
       <Floor />
-      {!isInitial && <fog attach="fog" color={"white"} near={22} far={60} />}
+      {helperCount && <fog attach="fog" color={"white"} near={22} far={60} />}
       <color attach="background" args={["#ffffff"]} />
       <EffectComposer>
         {!isGlitch && (
