@@ -17,8 +17,6 @@ export const Stage2 = () => {
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
-  const fogRef = useRef(null);
-
   useEffect(() => {
     window.fogInterval = setInterval(() => setHelperCount((p) => p + 1), 50);
 
