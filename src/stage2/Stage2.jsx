@@ -8,7 +8,7 @@ import { BlendFunction, GlitchMode } from "postprocessing";
 import { Cube } from "./3DComponents/Cube/Cube";
 import { Floor } from "./3DComponents/Floor/Floor";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const Stage2 = () => {
   const [isInverted, setIsInverted] = useState(false);
