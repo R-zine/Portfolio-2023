@@ -20,8 +20,16 @@ const Primitives = () => (
 export const Stage2 = () => {
   const [isInverted, setIsInverted] = useState(false);
   const [isGlitch, setIsGlitch] = useState(false);
+  const [isInitial, setIsInitial] = useState(true);
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
+
+  useEffect(() => {
+    if (isInitial)
+      setTimeout(() => {
+        setIsInitial(false);
+      }, 160);
+  }, []);
 
   useEffect(() => {
     if (contactPhase === 4) {
@@ -40,7 +48,7 @@ export const Stage2 = () => {
     <>
       <Cube />
       <Floor />
-      <Primitives />
+      {!isInitial && <Primitives />}
 
       <EffectComposer>
         {!isGlitch && (
