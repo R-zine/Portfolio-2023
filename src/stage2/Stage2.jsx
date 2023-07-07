@@ -10,23 +10,18 @@ import { Floor } from "./3DComponents/Floor/Floor";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
+const Primitives = () => (
+  <>
+    <fog attach="fog" color={"white"} near={22} far={60} />
+    <color attach="background" args={["#ffffff"]} />
+  </>
+);
+
 export const Stage2 = () => {
   const [isInverted, setIsInverted] = useState(false);
   const [isGlitch, setIsGlitch] = useState(false);
-  const [helperCount, setHelperCount] = useState(true);
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
-
-  const ref = useRef(null);
-
-  useEffect(() => {
-    window.fogInterval = setInterval(
-      () => !ref.current && setHelperCount((p) => p + 1),
-      50
-    );
-
-    return () => window.removeInterval(fogInterval);
-  }, []);
 
   useEffect(() => {
     if (contactPhase === 4) {
@@ -45,17 +40,8 @@ export const Stage2 = () => {
     <>
       <Cube />
       <Floor />
-      {helperCount && (
-        <fog
-          key={helperCount}
-          ref={ref}
-          attach="fog"
-          color={"white"}
-          near={22}
-          far={60}
-        />
-      )}
-      <color attach="background" args={["#ffffff"]} />
+      <Primitives />
+
       <EffectComposer>
         {!isGlitch && (
           <ChromaticAberration
