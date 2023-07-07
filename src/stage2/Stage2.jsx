@@ -13,7 +13,7 @@ import { useEffect, useState, useRef } from "react";
 export const Stage2 = () => {
   const [isInverted, setIsInverted] = useState(false);
   const [isGlitch, setIsGlitch] = useState(false);
-  const [helperCount, sethelperCount] = useState(true);
+  const [helperCount, setHelperCount] = useState(true);
 
   const contactPhase = useSelector((state) => state.contactCounter.value);
 
