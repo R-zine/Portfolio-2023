@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@emotion/styled": "^11.10.8",
     "@nodetoy/react-nodetoy": "^0.1.23",
     "@react-three/drei": "^9.65.4",

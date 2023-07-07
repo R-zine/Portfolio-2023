@@ -8,6 +8,9 @@ import gsap from "gsap";
 import { useDispatch, useSelector } from "react-redux";
 import { setContactCount } from "../../../app/contactsCounterSlice";
 import { RigidBody } from "@react-three/rapier";
+import emailjs from "@emailjs/browser";
+
+emailjs.init("D0ctY-SwJYajvmMel");
 
 export const Side = ({
   rotateX,
@@ -24,9 +27,13 @@ export const Side = ({
     reddit: false,
     email: false,
     message: false,
+    send: false,
   });
 
   const [isHTML, setIsHTML] = useState(false);
+
+  const [emailValue, setEmailValue] = useState("");
+  const [messageValue, setMessageValue] = useState("");
 
   const ref = useRef(null);
   const rigidRef = useRef(null);
@@ -77,6 +84,37 @@ export const Side = ({
     if (rotateY) ref.current.rotation.y = rotateY;
     if (rotateZ) ref.current.rotation.z = rotateZ;
   });
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const handleFormSend = () => {
+    if (validateEmail(emailValue) && !!messageValue) {
+      emailjs
+        .send("service_0lnz0ab", "template_dw76dor", {
+          subject: "Portfolio 2023 Message Form",
+          name: "System",
+          email: emailValue,
+          message: messageValue,
+        })
+        .then(
+          function (response) {
+            setEmailValue("Message sent!");
+            setMessageValue("");
+          },
+          function (error) {
+            setEmailValue("Sending failed");
+          }
+        );
+    } else {
+      setEmailValue("Invalid Email!");
+    }
+  };
 
   if (!!position && !!args)
     return (
@@ -455,7 +493,13 @@ export const Side = ({
                     width: isHovered.email ? 115 : 105,
                   }}
                 >
-                  <input type="email" placeholder="Email" className="input" />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="input"
+                    value={emailValue}
+                    onChange={(e) => setEmailValue(e.target.value)}
+                  />
                 </div>
               </Html>
               <Html
@@ -481,7 +525,12 @@ export const Side = ({
                     justifyContent: "center",
                   }}
                 >
-                  <textarea placeholder="Message" className="textarea" />
+                  <textarea
+                    placeholder="Message"
+                    className="textarea"
+                    value={messageValue}
+                    onChange={(e) => setMessageValue(e.target.value)}
+                  />
                 </div>
               </Html>
               <Html
@@ -495,22 +544,76 @@ export const Side = ({
                 sprite={true} // Renders as sprite, but only in transform mode (default=false)
                 occlude={false} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
               >
-                <div
-                  style={{
-                    color: "black",
-                    fontSize: 20,
-                  }}
-                >
-                  Nobody
-                </div>
-                <div
-                  style={{
-                    color: "black",
-                    fontSize: 20,
-                  }}
-                >
-                  can see this.
-                </div>
+                {!emailValue || !messageValue ? (
+                  <>
+                    <div
+                      style={{
+                        color: "black",
+                        fontSize: 20,
+                      }}
+                    >
+                      Nobody
+                    </div>
+                    <div
+                      style={{
+                        color: "black",
+                        fontSize: 20,
+                      }}
+                    >
+                      can see this.
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      onPointerEnter={() => handleHoverChange("send", true)}
+                      onPointerLeave={() => handleHoverChange("send", false)}
+                      onClick={() => handleFormSend()}
+                      style={{
+                        fontSize: 16,
+                        display: "flex",
+                        gap: 10,
+                        border: "1px solid black",
+                        borderRadius: 1.5,
+                        padding: 1.5,
+                        backgroundColor: isHovered.send ? "black" : "#00000000",
+                        transition: "0.5s",
+                        width: isHovered.send ? 95 : 75,
+                      }}
+                    >
+                      <div
+                        style={{
+                          height: 18,
+                          marginTop: -1.5,
+                          filter: isHovered.send ? "invert(100%)" : "none",
+                        }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="1em"
+                          viewBox="0 0 448 512"
+                        >
+                          <path d="M384 32c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H384zM160 144c-13.3 0-24 10.7-24 24s10.7 24 24 24h94.1L119 327c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135V328c0 13.3 10.7 24 24 24s24-10.7 24-24V168c0-13.3-10.7-24-24-24H160z" />
+                        </svg>
+                      </div>
+                      <div
+                        onPointerEnter={() => handleHoverChange("send", true)}
+                        onPointerLeave={() => handleHoverChange("send", false)}
+                        style={{
+                          color: isHovered.send ? "white" : "black",
+                          fontSize: 10,
+                          textIndent: isHovered.send ? 20 : 0,
+                          textShadow: isHovered.send
+                            ? "-20px 0 2px white"
+                            : "0 0 0 0 white",
+                          transition: "0.5s",
+                        }}
+                      >
+                        Send
+                      </div>
+                    </div>
+                  </>
+                )}
               </Html>
             </mesh>
           </>
