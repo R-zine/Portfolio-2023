@@ -64,8 +64,8 @@ export const Tile = styled.div`
 export const NoOverflow = styled.div`
   position: fixed;
   width: 50vw;
-  height: 12vw;
-  top: 10;
+  height: 10vw;
+  top: 10vh;
   left: ${(props) => (props.left ? 0 : 50)}vw;
   z-index: 1000;
 
