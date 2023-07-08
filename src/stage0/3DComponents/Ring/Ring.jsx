@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { useScroll } from "@react-three/drei";
 import { useDispatch, useSelector } from "react-redux";
 import { setAboutCount } from "../../../app/aboutSlice";
+import { triggerWarning } from "../../../app/mainSlice";
 
 export const Ring = ({
   scale,
@@ -20,6 +21,8 @@ export const Ring = ({
 
   const { value: offset, isBack } = useSelector((state) => state.aboutCounter);
 
+  const warningState = useSelector((state) => state.main.warning);
+
   const intensity = useRef(0.05);
 
   const outerRingRef1 = useRef(null);
@@ -32,9 +35,13 @@ export const Ring = ({
 
   const dispatch = useDispatch();
 
-  useFrame(() => {
+  useFrame((_state, delta) => {
     if (scale === 0.5 && !isBack && isAbout)
       dispatch(setAboutCount(scroll.offset));
+
+    if (!warningState.wasTriggered && scale === 0.5) {
+      if (delta > 0.4 && delta < 0.6) dispatch(triggerWarning("fps"));
+    }
   });
 
   useEffect(() => {
