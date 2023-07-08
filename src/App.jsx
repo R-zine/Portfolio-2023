@@ -24,7 +24,7 @@ import { Physics } from "@react-three/rapier";
 import { Stage3Overlay } from "./stage3/Stage3Overlay";
 import { EffectsStage3 } from "./stage3/Effects";
 import { setBackState } from "./app/aboutSlice";
-import { setMain } from "./app/mainSlice";
+import { setMain, triggerWarning } from "./app/mainSlice";
 import { setContactCount } from "./app/contactsCounterSlice";
 import { Footer } from "./Footer";
 import { Warning } from "./stage0/2DComponents/Warning/Warning";
