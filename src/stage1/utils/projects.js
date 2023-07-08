@@ -21,7 +21,7 @@ export const projects = [
     ["React", "React-three-fiber (for the Tech tab)", "Blender", "GSAP"],
     ["./port20211.jpg", "./port20212.jpg"],
     "https://github.com/R-zine/PortfolioSite2021/",
-    "https://ivanradev.netlify.app/"
+    "https://ivanradev2021.netlify.app/"
   ),
   new Project(
     "A full-stack Snake game built on NextJS with PostegreSQL integration through Prisma. The user details and preferences are saved on the DB (Supabase). The speed, growth-rate, and size of the playing board are adjustable. If the user is viewing the App on a mobile device arrow buttons are automatically rendered.",
