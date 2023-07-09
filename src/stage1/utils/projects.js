@@ -53,7 +53,7 @@ export const projects = [
     ],
     ["./native.jpg"],
     "https://github.com/R-zine/ItemHunter",
-    "https://appetize.io/embed/wmt2t4k2p3agh4tttqwpm3ncpy"
+    "https://item-hunter-preview.netlify.app/"
   ),
   new Project(
     "An architectural portfolio website, featuring many different types of animations and an unique styling approach. The website is fully responsive and has a custom 3D model in the contacts' page.",
