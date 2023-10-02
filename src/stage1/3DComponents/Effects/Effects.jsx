@@ -47,7 +47,7 @@ export const Effects = () => {
         {index === 2 && (
           <Noise
             premultiply // enables or disables noise premultiplication
-            blendFunction={BlendFunction.DIFFERENCE} // blend mode
+            blendFunction={BlendFunction.OVERLAY} // blend mode
           />
         )}
         {index === 3 && (
