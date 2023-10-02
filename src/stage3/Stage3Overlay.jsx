@@ -351,34 +351,36 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
           |
         </Tile>
         <NoOverflow ref={noOverflowLeft} left>
-          <Tile top={10} left={5} ref={a5} zIndex={1001}>
-            <span>C</span>reative
-          </Tile>
-          <Tile top={10} left={25} ref={a6}>
-            <span>D</span>eveloper
-          </Tile>
-          <Tile top={10} left={51} opacity ref={b1} zIndex={1001}>
-            <span>C</span>rafting
-          </Tile>
-          <Tile top={10} left={51} opacity ref={b2}>
-            <SlidingText ref={slidingTextRef}>
-              <div>
-                <span>A</span>rtful
-              </div>
-              <div>
-                <span>S</span>tellar
-              </div>
-              <div>
-                <span>T</span>hrilling
-              </div>
-              <div>
-                <span>U</span>nique
-              </div>
-              <div>
-                <span>S</span>uperb
-              </div>
-            </SlidingText>
-          </Tile>
+          <div>
+            <Tile top={10} left={5} ref={a5} zIndex={1001}>
+              <span>C</span>reative
+            </Tile>
+            <Tile top={10} left={25} ref={a6}>
+              <span>D</span>eveloper
+            </Tile>
+            <Tile top={10} left={51} opacity ref={b1} zIndex={1001}>
+              <span>C</span>rafting
+            </Tile>
+            <Tile top={10} left={51} opacity ref={b2}>
+              <SlidingText ref={slidingTextRef}>
+                <div>
+                  <span>A</span>rtful
+                </div>
+                <div>
+                  <span>S</span>tellar
+                </div>
+                <div>
+                  <span>T</span>hrilling
+                </div>
+                <div>
+                  <span>U</span>nique
+                </div>
+                <div>
+                  <span>S</span>uperb
+                </div>
+              </SlidingText>
+            </Tile>
+          </div>
         </NoOverflow>
         <NoOverflow ref={noOverflowRight}>
           <Tile top={10} left={60} ref={a7}>
