@@ -45,6 +45,13 @@ const checkMobile = () => {
   return check;
 };
 
+const isSafari =
+  navigator.vendor &&
+  navigator.vendor.indexOf("Apple") > -1 &&
+  navigator.userAgent &&
+  navigator.userAgent.indexOf("CriOS") == -1 &&
+  navigator.userAgent.indexOf("FxiOS") == -1;
+
 function App() {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   const [isGlitch, setIsGlitch] = useState(false);
@@ -84,6 +91,8 @@ function App() {
   useEffect(() => {
     if (!warningState.wasTriggered && checkMobile())
       dispatch(triggerWarning("mobile"));
+    else if (!warningState.wasTriggered && isSafari)
+      dispatch(triggerWarning("safari"));
   }, []);
 
   useEffect(() => {

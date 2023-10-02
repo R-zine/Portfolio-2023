@@ -62,7 +62,9 @@ export const Warning = ({ reason }) => {
         <div>
           {reason === "fps"
             ? "This 3D web experience seems to be running slowly on your machine. Please click 'View 2D Site' below to be redirected to the previous version of my portfolio. Clicking 'Cancel' will let you view this site and this warning will not appear again."
-            : "It seems you are viewing this 3D web experience on a mobile device. Some interactions on this App require a mouse, and you might experience slowness depending on your device. Clicking 'View Mobile Site' will take you to the previous version of my portfolio. Clicking 'Cancel' will let you view this site and this warning will not appear again."}
+            : reason === "mobile"
+            ? "It seems you are viewing this 3D web experience on a mobile device. Some interactions on this App require a mouse, and you might experience slowness depending on your device. Clicking 'View Mobile Site' will take you to the previous version of my portfolio. Clicking 'Cancel' will let you view this site and this warning will not appear again."
+            : "You are viewing this website on Safari, which doesn't support some resources. Please switch to a different browser or view the previous portfolio version by clicking the button below."}
         </div>
         <ButtonCont>
           <Button
@@ -71,7 +73,9 @@ export const Warning = ({ reason }) => {
               window.open("https://ivanradev2021.netlify.app/", "_self")
             }
           >
-            {reason === "fps" ? "View 2D Site" : "View Mobile Site"}
+            {reason === "fps" || reason === "safari"
+              ? "View 2D Site"
+              : "View Mobile Site"}
           </Button>
           <Button
             className="button"

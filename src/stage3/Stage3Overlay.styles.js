@@ -69,7 +69,6 @@ export const NoOverflow = styled.div`
   left: ${(props) => (props.left ? 0 : 50)}vw;
   z-index: 1000;
   clip: rect(auto, auto, auto, auto);
-  -webkit-clip: rect(auto, auto, auto, auto);
 `;
 
 export const SlidingText = styled.div`
