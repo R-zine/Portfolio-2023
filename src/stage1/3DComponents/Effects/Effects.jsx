@@ -60,7 +60,7 @@ export const Effects = () => {
         {index === 4 && (
           <>
             <Grid
-              blendFunction={BlendFunction.DIFFERENCE} // blend mode
+              blendFunction={BlendFunction.OVERLAY} // blend mode
               scale={0.1} // grid pattern scale
               lineWidth={0.1} // grid pattern line width
             />
