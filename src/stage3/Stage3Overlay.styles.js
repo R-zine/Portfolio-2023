@@ -68,8 +68,17 @@ export const NoOverflow = styled.div`
   top: 10vh;
   left: ${(props) => (props.left ? 0 : 50)}vw;
   z-index: 1000;
-
   clip: rect(auto, auto, auto, auto);
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .rowcontainer {
+      clip: auto;
+      -webkit-mask-image: -webkit-linear-gradient(
+        top,
+        #ffffff 0%,
+        #ffffff 100%
+      );
+    }
+  }
 `;
 
 export const SlidingText = styled.div`
