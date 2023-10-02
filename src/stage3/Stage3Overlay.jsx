@@ -30,6 +30,8 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
 
   const offset = useSelector((state) => state.aboutCounter.value);
 
+  console.log(offset);
+
   const glitchRef = useRef(false);
 
   const isGlitch = useSelector((state) => state.aboutCounter.isGlitch);
