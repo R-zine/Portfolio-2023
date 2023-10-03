@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Black, EndScreen, NothingIs } from "./Stage2Overlay.styles";
 import gsap from "gsap";
 import {
-  MenUButton,
+  MenuButton,
   MenuButtonContainer,
   MenuButtonTail,
 } from "../../stage0/2DComponents/Menu/Menu.styles";
@@ -55,7 +55,7 @@ export const Stage2Overlay = ({ back }) => {
 
       {contactPhase !== 4 && !isEnd && (
         <MenuButtonContainer className="button" onClick={() => setIsEnd(true)}>
-          <MenUButton dark>Back</MenUButton>
+          <MenuButton dark>Back</MenuButton>
           <MenuButtonTail dark />
         </MenuButtonContainer>
       )}

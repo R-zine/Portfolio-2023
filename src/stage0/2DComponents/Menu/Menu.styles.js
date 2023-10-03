@@ -13,25 +13,27 @@ export const MenuButtonContainer = styled.div`
   }
 `;
 
-export const MenUButton = styled.div`
-  padding: 1vmin;
-  padding-right: 3vmin;
+export const MenuButton = styled.div`
   border-bottom: 2px solid white;
   border-color: ${(props) => (props.dark ? "black" : "white")};
-  font-size: 1.5vmin;
   text-shadow: ${(props) => `1px 0px 5px ${props.dark ? "black" : "white"}`};
   transition: 500ms;
   color: ${(props) => (props.dark ? "black" : "white")};
+
+  padding: 13px;
+  padding-right: 39px;
+  font-size: 19.5px;
 `;
 
 export const MenuButtonTail = styled.div`
-  width: 4vmin;
   transform: skew(135deg);
   border-bottom: 2px solid white;
   border-right: 2px solid white;
   border-color: ${(props) => (props.dark ? "black" : "white")};
   margin-bottom: -2px;
-  margin-left: -2vmin;
+
+  margin-left: -26px;
+  width: 52px;
 `;
 
 export const Curtain = styled("div")`

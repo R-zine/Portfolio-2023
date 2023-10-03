@@ -17,7 +17,7 @@ import {
 } from "./ProjectDisplay.styles";
 import {
   MenuButtonContainer,
-  MenUButton,
+  MenuButton,
   MenuButtonTail,
 } from "../../../stage0/2DComponents/Menu/Menu.styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -166,7 +166,7 @@ export const ProjectDisplay = ({ back }) => {
             </CursorReplace>
           )}
         <MenuButtonContainer className="button" onClick={() => setIsBack(true)}>
-          <MenUButton>Back</MenUButton>
+          <MenuButton>Back</MenuButton>
           <MenuButtonTail />
         </MenuButtonContainer>
       </>

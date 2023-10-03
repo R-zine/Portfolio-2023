@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  MenUButton,
+  MenuButton,
   MenuButtonContainer,
   MenuButtonTail,
 } from "../stage0/2DComponents/Menu/Menu.styles";
@@ -308,7 +308,7 @@ export const Stage3Overlay = ({ handleBack, handleContact }) => {
             setTimeout(() => clearInterval(window.offsetInterval), 6000);
           }}
         >
-          <MenUButton>Back</MenUButton>
+          <MenuButton>Back</MenuButton>
           <MenuButtonTail />
         </MenuButtonContainer>
 

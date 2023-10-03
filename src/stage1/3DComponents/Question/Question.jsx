@@ -1,6 +1,6 @@
 import { Sphere, Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { increment } from "../../../app/projectCounterSlice";
 
@@ -18,6 +18,17 @@ export const Question = () => {
       groupRef.current.rotation.y = clock.getElapsedTime() / -2;
   });
 
+  const sphereArgs = useMemo(() => {
+    if (!value || value === 1) return [5, 4, 2];
+    if (value === 2) return [5, 4, 3];
+    if (value === 3) return [5, 4, 4];
+    if (value === 4) return [5, 4, 6];
+    if (value === 5) return [5, 4, 9];
+    if (value === 6) return [5, 4, 12];
+    if (value === 7) return [5, 4, 16];
+    return [5, 4, 20];
+  }, [value]);
+
   return (
     <>
       <group
@@ -33,7 +44,7 @@ export const Question = () => {
           {value === 0 ? "?" : value}
         </Text>
         <Sphere
-          args={[5, 4, 2]}
+          args={sphereArgs}
           castShadow
           position={[0, 7, 0]}
           onPointerEnter={() => setIsHovered(true)}

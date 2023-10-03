@@ -3,7 +3,7 @@ import {
   MenuItem,
   Tail,
   Curtain,
-  MenUButton,
+  MenuButton,
   MenuButtonContainer,
   MenuButtonTail,
 } from "./Menu.styles";
@@ -27,7 +27,7 @@ export const Menu = () => {
         className="button"
         onClick={() => setIsExpanded((p) => !p)}
       >
-        <MenUButton>Menu</MenUButton>
+        <MenuButton>Menu</MenuButton>
         <MenuButtonTail />
       </MenuButtonContainer>
       <Curtain expanded={isExpanded} />

@@ -13,6 +13,9 @@ export const FooterContainer = styled.div`
   &:hover > div {
     text-shadow: 30px 0px 5px white;
   }
+  @media screen and (max-width: 1250px) {
+    display: none;
+  }
 `;
 
 export const FooterText = styled.div`
@@ -27,12 +30,14 @@ export const FooterText = styled.div`
   display: ${(props) => (props.opacity ? "flex" : "none")};
   min-width: 6vmax;
   text-align: center;
+  @media screen and (max-width: 1700px) {
+    font-size: 16px;
+  }
 `;
 
 export const FooterTail = styled.div`
   width: 40px;
   transform: skew(135deg);
-  border-bottom: 2px solid white;
   border-right: 2px solid white;
   border-color: ${(props) => (props.dark ? "black" : "white")};
   margin-bottom: -2px;
