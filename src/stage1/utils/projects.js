@@ -78,7 +78,7 @@ export const projects = [
       "Emotion / Styled",
     ],
     [""],
-    "",
+    "https://github.com/R-zine/Portfolio-2023",
     ""
   ),
 ];
