@@ -10,18 +10,18 @@ class Project {
 
 export const projects = [
   new Project(
-    "A block-stacking 3D game with simulated physics. Written in React and the React-three-fiber ecosystem.",
-    ["React", "React-three-fiber", "CannonJS physics engine", "GSAP"],
-    ["./stackr1.jpg", "./stackr2.jpg"],
-    "https://github.com/R-zine/stackr",
-    "https://stckr.netlify.app/"
-  ),
-  new Project(
     "This is my dev portfolio from 2021. The site you are currently viewing was envisioned as a continuation of the old portfolio with multiple improvements. Albeit much simpler, I am happy how it turned out and it now serves as a fallback for devices with low processing power and/or small screens.",
     ["React", "React-three-fiber (for the Tech tab)", "Blender", "GSAP"],
     ["./port20211.jpg", "./port20212.jpg"],
     "https://github.com/R-zine/PortfolioSite2021/",
     "https://ivanradev2021.netlify.app/"
+  ),
+  new Project(
+    "A block-stacking 3D game with simulated physics. Written in React and the React-three-fiber ecosystem.",
+    ["React", "React-three-fiber", "CannonJS physics engine", "GSAP"],
+    ["./stackr1.jpg", "./stackr2.jpg"],
+    "https://github.com/R-zine/stackr",
+    "https://stckr.netlify.app/"
   ),
   new Project(
     "A full-stack Snake game built on NextJS with PostegreSQL integration through Prisma. The user details and preferences are saved on the DB (Supabase). The speed, growth-rate, and size of the playing board are adjustable. If the user is viewing the App on a mobile device arrow buttons are automatically rendered.",
