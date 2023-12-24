@@ -10,7 +10,9 @@ import { setContactCount } from "../../../app/contactsCounterSlice";
 import { RigidBody } from "@react-three/rapier";
 import emailjs from "@emailjs/browser";
 
-emailjs.init("D0ctY-SwJYajvmMel");
+const emailKey = import.meta.env.VITE_EMAIL_KEY;
+
+emailjs.init(emailKey);
 
 export const Side = ({
   rotateX,
