@@ -6,6 +6,7 @@
   transition: 0.5s;
   border: none;
   color: black;
+  overflow: auto;
 }
 
 .input:focus-within {
@@ -13,25 +14,44 @@
   background-color: #000000;
 }
 
+.message-field {
+  width: 210px;
+  border: 2px solid black;
+  border-radius: 3px;
+  background-color: #00000000;
+  transition: 0.5s;
+}
+
+.message-field:focus-within {
+  background-color: #000000;
+}
+
 .textarea {
-  font-size: 12px;
-  min-height: 12px;
+  display: block;
+  box-sizing: border-box;
+  font-size: 24px;
+  min-height: 24px;
   background-color: #00000000;
   text-align: center;
   color: black;
   transition: 0.5s;
   width: 100%;
-  height: 100%;
   resize: none;
   border: none;
+  outline: none;
+  margin: 0;
+  padding: 4px;
+  overflow: auto;
 }
 
-.textarea:focus-within {
+.textarea:focus {
   color: white;
   background-color: #000000;
-  min-height: 60px;
-  font-size: 6px;
-  width: 100%;
-  height: 100%;
-  resize: none;
+  min-height: 120px;
+}
+
+.cubeHTML,
+.cubeHTML > div,
+.cubeHTML > div > div {
+  overflow: visible !important;
 }
