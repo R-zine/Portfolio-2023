@@ -5,6 +5,33 @@ import type { Group } from "three";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { increment } from "../../../app/projectCounterSlice";
 
+const materialStyles = {
+  8: {
+    color: "#78e9ff",
+    emissive: "#087e9f",
+    emissiveIntensity: 0.9,
+    metalness: 0.9,
+    roughness: 0.18,
+    wireframe: true,
+  },
+  9: {
+    color: "#ff6534",
+    emissive: "#6f1600",
+    emissiveIntensity: 0.8,
+    metalness: 0.3,
+    roughness: 0.45,
+    wireframe: false,
+  },
+  11: {
+    color: "#82ff9d",
+    emissive: "#116c2b",
+    emissiveIntensity: 0.85,
+    metalness: 0.72,
+    roughness: 0.22,
+    wireframe: false,
+  },
+} as const;
+
 export const Question = () => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -20,15 +47,11 @@ export const Question = () => {
   });
 
   const sphereArgs = useMemo<[number, number, number]>(() => {
-    if (!value || value === 1) return [5, 4, 2];
-    if (value === 2) return [5, 4, 3];
-    if (value === 3) return [5, 4, 4];
-    if (value === 4) return [5, 4, 6];
-    if (value === 5) return [5, 4, 9];
-    if (value === 6) return [5, 4, 12];
-    if (value === 7) return [5, 4, 16];
-    return [5, 4, 20];
+    const heightSegments = [2, 3, 4, 6, 9, 12, 16, 20, 24, 28, 32, 36];
+    return [5, 4, heightSegments[value - 1] ?? heightSegments[0]];
   }, [value]);
+
+  const materialStyle = materialStyles[value as keyof typeof materialStyles];
 
   return (
     <>
@@ -52,9 +75,12 @@ export const Question = () => {
           onPointerLeave={() => setIsHovered(false)}
         >
           <meshStandardMaterial
-            color={isHovered ? "white" : "crimson"}
-            roughness={1}
-            metalness={0.5}
+            color={isHovered ? "white" : materialStyle?.color ?? "crimson"}
+            emissive={materialStyle?.emissive ?? "black"}
+            emissiveIntensity={materialStyle?.emissiveIntensity ?? 0}
+            roughness={materialStyle?.roughness ?? 1}
+            metalness={materialStyle?.metalness ?? 0.5}
+            wireframe={materialStyle?.wireframe ?? false}
           />
         </Sphere>
       </group>

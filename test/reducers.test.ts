@@ -26,26 +26,33 @@ import projectReducer, {
   decrement,
   increment,
 } from "../src/app/projectCounterSlice";
+import { projects } from "../src/stage1/utils/projects";
 
 describe("project counter reducer", () => {
   test("moves from the placeholder in both directions", () => {
     assert.equal(projectReducer(undefined, increment()).value, 1);
-    assert.equal(projectReducer(undefined, decrement()).value, 7);
+    assert.equal(projectReducer(undefined, decrement()).value, projects.length);
   });
 
   test("cycles through all projects without a negative index", () => {
     let state;
     const visited = [];
-    for (let index = 0; index < 8; index += 1) {
+    for (let index = 0; index <= projects.length; index += 1) {
       state = projectReducer(state, increment());
       visited.push(state.value);
     }
-    assert.deepEqual(visited, [1, 2, 3, 4, 5, 6, 7, 1]);
+    assert.deepEqual(visited, [
+      ...Array.from({ length: projects.length }, (_, index) => index + 1),
+      1,
+    ]);
     assert.ok(visited.every((value) => value >= 1));
   });
 
   test("wraps backward from the first project", () => {
-    assert.equal(projectReducer({ value: 1 }, decrement()).value, 7);
+    assert.equal(
+      projectReducer({ value: 1 }, decrement()).value,
+      projects.length
+    );
   });
 });
 

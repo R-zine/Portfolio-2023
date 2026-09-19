@@ -1,10 +1,23 @@
 import { Box, MeshReflectorMaterial } from "@react-three/drei";
+import { useAppSelector } from "../../../app/hooks";
+
+const floorStyles = {
+  8: { color: "#03121b", metalness: 0.65, roughness: 0.22 },
+  9: { color: "#210601", metalness: 0.25, roughness: 0.48 },
+  11: { color: "#03180a", metalness: 0.5, roughness: 0.3 },
+} as const;
 
 export const Floor = (): JSX.Element => {
+  const index = useAppSelector((state) => state.projectCounter.value);
+  const style = floorStyles[index as keyof typeof floorStyles];
+
   return (
     <>
       <Box args={[1000, 1, 1000]} receiveShadow position={[0, -2, 0]}>
         <MeshReflectorMaterial
+          color={style?.color ?? "white"}
+          metalness={style?.metalness ?? 0}
+          roughness={style?.roughness ?? 1}
           blur={[0, 0]} // Blur ground reflections (width, height), 0 skips blur
           mixBlur={0.4} // How much blur mixes with surface roughness (default = 1)
           mixStrength={0.3} // Strength of the reflections

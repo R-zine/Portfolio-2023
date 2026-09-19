@@ -29,6 +29,20 @@ describe("source regressions", () => {
     assert.doesNotMatch(source, /key=\{[^}]*Math\.random/);
   });
 
+  test("gives projects 8, 9, and 11 distinct 3D atmospheres", async () => {
+    const [stage, atmosphere] = await Promise.all([
+      readSource("src/stage1/Stage1.tsx"),
+      readSource(
+        "src/stage1/3DComponents/ProjectAtmosphere/ProjectAtmosphere.tsx"
+      ),
+    ]);
+
+    assert.match(stage, /<ProjectAtmosphere \/>/);
+    assert.match(atmosphere, /case 8:\s*return <PortfolioOrbit \/>/);
+    assert.match(atmosphere, /case 9:\s*return <StackingField \/>/);
+    assert.match(atmosphere, /case 11:\s*return <ScannerField \/>/);
+  });
+
   test("uses a guarded ref for the about timeline", async () => {
     const source = await readSource("src/stage3/Stage3Overlay.tsx");
     assert.match(source, /timelineRef\.current\?\.timeScale/);

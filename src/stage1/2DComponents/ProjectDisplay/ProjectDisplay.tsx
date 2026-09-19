@@ -204,19 +204,14 @@ export const ProjectDisplay = ({ back }: ProjectDisplayProps) => {
             </Button>
           </ButtonsContainer>
         </Container>
-        {Object.values(isHovered).some(Boolean) &&
-          hasProject && (
-            <CursorReplace
-              top={isHovered.one ? 41 : 86}
-              left={isHovered.three ? 90 : 30}
-            >
-              {!isHovered.three
-                ? "See source"
-                : projectIndex === 7
-                ? "Back to home"
-                : "Go to site"}
-            </CursorReplace>
-          )}
+        {Object.values(isHovered).some(Boolean) && hasProject && (
+          <CursorReplace
+            top={isHovered.one ? 41 : 86}
+            left={isHovered.three ? 90 : 30}
+          >
+            {isHovered.three ? "Go to site" : "See source"}
+          </CursorReplace>
+        )}
         <MenuButtonContainer
           type="button"
           className="button"
